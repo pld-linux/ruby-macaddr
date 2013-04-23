@@ -1,44 +1,34 @@
-
-%define gitrev 053e94b
-%define gitauthor assaf
-%define gitname macaddr
-
+%define pkgname macaddr
 Summary:	Ruby library for dealing with MAC addresses
-Name:		ruby-macaddr
-Version:	1.0.0
+Name:		ruby-%{pkgname}
+Version:	1.6.1
 Release:	1
 License:	MIT
 Group:		Development/Tools
-Source0:	http://codeforpeople.com/lib/ruby/macaddr/macaddr-1.0.0.tgz
-# Source0-md5:	46827e2c3bef03b37f7558050e502ecf
-URL:		http://codeforpeople.com/lib/ruby/macaddr/
-BuildRequires:	rpmbuild(macros) >= 1.277
-BuildRequires:	ruby
-BuildRequires:	ruby-modules
-BuildRequires:	setup.rb >= 3.4.1
-%{?ruby_mod_ver_requires_eq}
-#BuildArch:	noarch
+Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
+# Source0-md5:	69fa3d4572d8d49c0d6f712b3b7bc6e0
+URL:		http://rubygems.org/gems/macaddr
+BuildRequires:	rpm-rubyprov
+BuildRequires:	rpmbuild(macros) >= 1.656
+Requires:	ruby-systemu >= 2.5.0
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Ruby library to interpret MAC addresses.
 
 %prep
-%setup -q -n macaddr-%{version}
-cp %{_datadir}/setup.rb .
-ruby setup.rb config \
-	--installdirs=std
-ruby setup.rb setup
+%setup -q -n %{pkgname}-%{version}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
-ruby setup.rb install \
-	--prefix=$RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{ruby_vendorlibdir}
+cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%{ruby_rubylibdir}/macaddr.rb
+%doc README
+%{ruby_vendorlibdir}/macaddr.rb
