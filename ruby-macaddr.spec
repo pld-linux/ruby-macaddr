@@ -2,7 +2,7 @@
 Summary:	Ruby library for dealing with MAC addresses
 Name:		ruby-%{pkgname}
 Version:	1.6.1
-Release:	1
+Release:	2
 License:	MIT
 Group:		Development/Tools
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
